@@ -20,10 +20,13 @@ DEPRECATION_WARNING = f"{colorstr('wandb')}: WARNING ⚠️ wandb is deprecated 
                       f'See supported integrations at https://github.com/ultralytics/yolov5#integrations.'
 
 try:
+    wandb = None
+    '''
     import wandb
 
     assert hasattr(wandb, '__version__')  # verify package import not local dir
     LOGGER.warning(DEPRECATION_WARNING)
+    '''
 except (ImportError, AssertionError):
     wandb = None
 
@@ -56,6 +59,7 @@ class WandbLogger():
        """
         # Pre-training routine --
         self.job_type = job_type
+        self.wandb = None
         self.wandb, self.wandb_run = wandb, wandb.run if wandb else None
         self.val_artifact, self.train_artifact = None, None
         self.train_artifact_path, self.val_artifact_path = None, None
